@@ -17,9 +17,7 @@ public class RecursiveLesson {
             return number;
         }
 
-        StringBuilder builder = new StringBuilder(String.valueOf(number));
-
-        return Integer.parseInt(builder.substring(0, 1)) + calculateDigitsSum(Integer.parseInt(builder.deleteCharAt(0).toString()));
+        return (number % 10) + calculateDigitsSum(number/10);
     }
 
     public static int getListLength(LinkedList<?> list) {
