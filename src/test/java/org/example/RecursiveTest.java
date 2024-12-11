@@ -30,4 +30,25 @@ public class RecursiveTest {
 
         assertThat(result).isEqualTo(5);
     }
+
+    @Test
+    void isPalindromeTest() {
+        boolean result = isPalindrome("abbcbba");
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void findEvenNumbersTest() {
+        String result = findEvenNumbers(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
+
+        assertThat(result).isEqualTo("2468");
+    }
+
+    @Test
+    void findNumbersWithEvenIndexTest() {
+        String result = findEvenIndex(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
+
+        assertThat(result).isEqualTo("1357");
+    }
 }
