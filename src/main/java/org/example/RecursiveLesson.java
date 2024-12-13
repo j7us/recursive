@@ -120,26 +120,27 @@ public class RecursiveLesson {
         return resultList;
     }
 
-    public static void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str, int count) {
-        if (leftRem == 0 && rightRem == 0) {
-            String s = String.copyValueOf(str);
+    public static ArrayList<String> generateParentheses(int count) {
+        char[] resulStringConstructor = new char[count * 2];
+        ArrayList<String> list = new ArrayList<>();
+        generateParenthesesRecursive(list, count, count, resulStringConstructor, 0);
+        return list;
+    }
+
+    public static void generateParenthesesRecursive(ArrayList<String> list, int leftPar, int rightPar, char[] resulStringConstructor, int count) {
+        if (leftPar == 0 && rightPar == 0) {
+            String s = String.copyValueOf(resulStringConstructor);
             list.add(s);
         } else {
-            if (leftRem > 0) {
-                str[count] = '(';
-                addParen(list, leftRem - 1, rightRem, str, count + 1);
+            if (leftPar > 0) {
+                resulStringConstructor[count] = '(';
+                generateParenthesesRecursive(list, leftPar - 1, rightPar, resulStringConstructor, count + 1);
             }
 
-            if (rightRem > leftRem) {
-                str[count] = ')';
-                addParen(list, leftRem, rightRem - 1, str, count + 1);
+            if (rightPar > leftPar) {
+                resulStringConstructor[count] = ')';
+                generateParenthesesRecursive(list, leftPar, rightPar - 1, resulStringConstructor, count + 1);
             }
         }
-    }
-    public static ArrayList<String> generateParens(int count) {
-        char[] str = new char[count * 2];
-        ArrayList<String> list = new ArrayList<String>();
-        addParen(list, count, count, str, 0);
-        return list;
     }
 }
