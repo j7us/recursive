@@ -2,8 +2,11 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.example.RecursiveLesson.*;
@@ -33,22 +36,35 @@ public class RecursiveTest {
 
     @Test
     void isPalindromeTest() {
-        boolean result = isPalindrome("abbcbba");
+        boolean result = isPalindrome("abba");
 
         assertThat(result).isTrue();
     }
 
     @Test
     void findEvenNumbersTest() {
-        String result = findEvenNumbers(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
-
-        assertThat(result).isEqualTo("2468");
+        findEvenNumbers(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
     }
 
     @Test
     void findNumbersWithEvenIndexTest() {
-        String result = findEvenIndex(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
+        findEvenIndex(new LinkedList<>(Arrays.asList(1,2,3,4,5,6,7,8)));
+    }
 
-        assertThat(result).isEqualTo("1357");
+    @Test
+    void findSecondMaxValueTest() {
+        int res = findSecondMaxValue(Arrays.asList(790,2,3,790,95,17,8,54));
+
+        assertThat(res).isEqualTo(790);
+    }
+
+    @Test
+    void findAllFilesInDirectoryTest() throws Exception{
+        List<Path> result = findAllFilesInDirectory("/Users/igooorrrrr/Desktop/пробное");
+    }
+
+    @Test
+    void generateParensTest() {
+        ArrayList<String> strings = generateParens(3);
     }
 }

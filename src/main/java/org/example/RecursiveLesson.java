@@ -1,6 +1,12 @@
 package org.example;
 
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class RecursiveLesson {
 
@@ -31,40 +37,109 @@ public class RecursiveLesson {
     }
 
     public static boolean isPalindrome(String palindromeTest) {
-        if (palindromeTest.length() == 1 || palindromeTest.isEmpty()) {
+        return isPalindromeRecursive(palindromeTest, 0);
+    }
+
+    private static boolean isPalindromeRecursive(String palindromeTest, int index) {
+        if (index == palindromeTest.length() - (1 + index) || index > palindromeTest.length() - (1 + index)) {
             return true;
         }
 
-        StringBuilder builder = new StringBuilder(palindromeTest);
+        boolean isPalindromeOnCurrentStep = palindromeTest.charAt(index) == palindromeTest.charAt(palindromeTest.length() - (1 + index));
 
-        boolean isPalindromeOnThisStep = builder.charAt(0) == builder.charAt(builder.length() - 1);
-
-        return isPalindromeOnThisStep && isPalindrome(builder.substring(1, builder.length()-1));
+        return isPalindromeOnCurrentStep && isPalindromeRecursive(palindromeTest, ++index);
     }
 
-    public static String findEvenNumbers(LinkedList<Integer> numbers) {
+    public static void findEvenNumbers(LinkedList<Integer> numbers) {
         if (numbers.isEmpty()) {
-            return "";
+            return;
         }
 
         Integer currentNumber = numbers.removeFirst();
 
-        String stepResult = currentNumber % 2 == 0 ? String.valueOf(currentNumber) : "";
-
-        return stepResult + findEvenNumbers(numbers);
-    }
-
-    public static String findEvenIndex(LinkedList<?> numbers) {
-        return findEvenIndexRecursive(numbers, 0);
-    }
-
-    private static String findEvenIndexRecursive(LinkedList<?> numbers, int index) {
-        if (index == numbers.size()) {
-            return "";
+        if (currentNumber % 2 == 0) {
+            System.out.println(currentNumber);
         }
 
-        String stepResult = index % 2 == 0 ? numbers.get(index).toString() : "";
+        findEvenNumbers(numbers);
+    }
 
-        return stepResult + findEvenIndexRecursive(numbers, ++index);
+    public static void findEvenIndex(LinkedList<?> numbers) {
+        findEvenIndexRecursive(numbers, 0);
+    }
+
+    private static void findEvenIndexRecursive(LinkedList<?> numbers, int index) {
+        if (index == numbers.size()) {
+            return;
+        }
+
+        if (index % 2 == 0) {
+            System.out.println(numbers.get(index));
+        }
+
+        findEvenIndexRecursive(numbers, ++index);
+    }
+
+    public static int findSecondMaxValue(List<Integer> numbers) {
+        return findSecondMaxValueRecursive(numbers,1, numbers.get(0), numbers.get(0));
+    }
+
+    private static int findSecondMaxValueRecursive(List<Integer> numbers,
+                                                   int index,
+                                                   int secondMaxValue,
+                                                   int maxValue) {
+        if (index == numbers.size()) {
+            return secondMaxValue;
+        }
+
+        Integer currentValue = numbers.get(index);
+
+        if (currentValue >= maxValue) {
+            return findSecondMaxValueRecursive(numbers, ++index, maxValue, currentValue);
+        } else if (currentValue > secondMaxValue) {
+            return findSecondMaxValueRecursive(numbers, ++index, currentValue, maxValue);
+        }
+
+        return findSecondMaxValueRecursive(numbers, ++index, secondMaxValue, maxValue);
+    }
+
+    public static List<Path> findAllFilesInDirectory(String path) throws Exception{
+        Path path1 = Path.of(path);
+        List<Path> resultList = new ArrayList<>();
+
+        try (DirectoryStream<Path> paths = Files.newDirectoryStream(path1);){
+            for (Path p : paths) {
+                if (Files.isDirectory(p)) {
+                    resultList.addAll(findAllFilesInDirectory(p.toString()));
+                } else {
+                    resultList.add(p);
+                }
+            }
+        }
+
+        return resultList;
+    }
+
+    public static void addParen(ArrayList<String> list, int leftRem, int rightRem, char[] str, int count) {
+        if (leftRem == 0 && rightRem == 0) {
+            String s = String.copyValueOf(str);
+            list.add(s);
+        } else {
+            if (leftRem > 0) {
+                str[count] = '(';
+                addParen(list, leftRem - 1, rightRem, str, count + 1);
+            }
+
+            if (rightRem > leftRem) {
+                str[count] = ')';
+                addParen(list, leftRem, rightRem - 1, str, count + 1);
+            }
+        }
+    }
+    public static ArrayList<String> generateParens(int count) {
+        char[] str = new char[count * 2];
+        ArrayList<String> list = new ArrayList<String>();
+        addParen(list, count, count, str, 0);
+        return list;
     }
 }
