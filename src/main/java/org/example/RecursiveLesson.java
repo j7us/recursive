@@ -45,23 +45,27 @@ public class RecursiveLesson {
             return true;
         }
 
-        boolean isPalindromeOnCurrentStep = palindromeTest.charAt(index) == palindromeTest.charAt(palindromeTest.length() - (1 + index));
+        if (palindromeTest.charAt(index) != palindromeTest.charAt(palindromeTest.length() - (1 + index))) {
+            return false;
+        }
 
-        return isPalindromeOnCurrentStep && isPalindromeRecursive(palindromeTest, ++index);
+        return isPalindromeRecursive(palindromeTest, ++index);
     }
 
     public static void findEvenNumbers(LinkedList<Integer> numbers) {
-        if (numbers.isEmpty()) {
+        findEvenNumbersRecursive(numbers, 0);
+    }
+
+    public static void findEvenNumbersRecursive(LinkedList<Integer> numbers, int index) {
+        if (index == numbers.size()) {
             return;
         }
 
-        Integer currentNumber = numbers.removeFirst();
-
-        if (currentNumber % 2 == 0) {
-            System.out.println(currentNumber);
+        if (numbers.get(index) % 2 == 0) {
+            System.out.println(numbers.get(index));
         }
 
-        findEvenNumbers(numbers);
+        findEvenNumbersRecursive(numbers, index + 1);
     }
 
     public static void findEvenIndex(LinkedList<?> numbers) {
@@ -81,7 +85,26 @@ public class RecursiveLesson {
     }
 
     public static int findSecondMaxValue(List<Integer> numbers) {
-        return findSecondMaxValueRecursive(numbers,1, numbers.get(0), numbers.get(0));
+        if (numbers.size() == 1) {
+            return numbers.get(0);
+        }
+
+        Integer secondMaxValue;
+        Integer maxValue;
+
+        if (numbers.get(0) <= numbers.get(1)) {
+            secondMaxValue = numbers.get(0);
+            maxValue = numbers.get(1);
+        } else {
+            secondMaxValue = numbers.get(1);
+            maxValue = numbers.get(0);
+        }
+
+        if (numbers.size() == 2) {
+            return secondMaxValue;
+        }
+
+        return findSecondMaxValueRecursive(numbers,2, secondMaxValue, maxValue);
     }
 
     private static int findSecondMaxValueRecursive(List<Integer> numbers,

@@ -62,9 +62,4 @@ public class RecursiveTest {
     void findAllFilesInDirectoryTest() throws Exception{
         List<Path> result = findAllFilesInDirectory("/Users/igooorrrrr/Desktop/пробное");
     }
-
-    @Test
-    void generateParensTest() {
-        ArrayList<String> strings = generateParens(3);
-    }
 }
