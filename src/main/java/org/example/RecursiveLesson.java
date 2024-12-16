@@ -49,7 +49,7 @@ public class RecursiveLesson {
             return false;
         }
 
-        return isPalindromeRecursive(palindromeTest, ++index);
+        return isPalindromeRecursive(palindromeTest, index + 1);
     }
 
     public static void findEvenNumbers(LinkedList<Integer> numbers) {
@@ -69,19 +69,19 @@ public class RecursiveLesson {
     }
 
     public static void findEvenIndex(LinkedList<?> numbers) {
-        findEvenIndexRecursive(numbers, 0);
+        findEvenIndexRecursive(numbers, 0, true);
     }
 
-    private static void findEvenIndexRecursive(LinkedList<?> numbers, int index) {
+    private static void findEvenIndexRecursive(LinkedList<?> numbers, int index, boolean even) {
         if (index == numbers.size()) {
             return;
         }
 
-        if (index % 2 == 0) {
+        if (even) {
             System.out.println(numbers.get(index));
         }
 
-        findEvenIndexRecursive(numbers, ++index);
+        findEvenIndexRecursive(numbers, index + 1, !even);
     }
 
     public static int findSecondMaxValue(List<Integer> numbers) {
@@ -115,15 +115,13 @@ public class RecursiveLesson {
             return secondMaxValue;
         }
 
-        Integer currentValue = numbers.get(index);
-
-        if (currentValue >= maxValue) {
-            return findSecondMaxValueRecursive(numbers, ++index, maxValue, currentValue);
-        } else if (currentValue > secondMaxValue) {
-            return findSecondMaxValueRecursive(numbers, ++index, currentValue, maxValue);
+        if (numbers.get(index) >= maxValue) {
+            return findSecondMaxValueRecursive(numbers, index + 1, maxValue, numbers.get(index));
+        } else if (numbers.get(index) > secondMaxValue) {
+            return findSecondMaxValueRecursive(numbers, index + 1, numbers.get(index), maxValue);
         }
 
-        return findSecondMaxValueRecursive(numbers, ++index, secondMaxValue, maxValue);
+        return findSecondMaxValueRecursive(numbers, index + 1, secondMaxValue, maxValue);
     }
 
     public static List<Path> findAllFilesInDirectory(String path) throws Exception{
