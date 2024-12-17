@@ -3,7 +3,6 @@ package org.example;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
