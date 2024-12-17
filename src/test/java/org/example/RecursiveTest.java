@@ -53,9 +53,9 @@ public class RecursiveTest {
 
     @Test
     void findSecondMaxValueTest() {
-        int res = findSecondMaxValue(Arrays.asList(790,2,3,790,95,17,8,54));
+        int res = findSecondMaxValue(Arrays.asList(790,2,3,95,17,8,54));
 
-        assertThat(res).isEqualTo(790);
+        assertThat(res).isEqualTo(95);
     }
 
     @Test

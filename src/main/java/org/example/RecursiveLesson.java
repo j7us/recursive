@@ -69,19 +69,17 @@ public class RecursiveLesson {
     }
 
     public static void findEvenIndex(LinkedList<?> numbers) {
-        findEvenIndexRecursive(numbers, 0, true);
+        findEvenIndexRecursive(numbers, 0);
     }
 
-    private static void findEvenIndexRecursive(LinkedList<?> numbers, int index, boolean even) {
-        if (index == numbers.size()) {
+    private static void findEvenIndexRecursive(LinkedList<?> numbers, int index) {
+        if (index >= numbers.size()) {
             return;
         }
 
-        if (even) {
-            System.out.println(numbers.get(index));
-        }
+        System.out.println(numbers.get(index));
 
-        findEvenIndexRecursive(numbers, index + 1, !even);
+        findEvenIndexRecursive(numbers, index + 2);
     }
 
     public static int findSecondMaxValue(List<Integer> numbers) {
@@ -115,13 +113,17 @@ public class RecursiveLesson {
             return secondMaxValue;
         }
 
+        int nextSecondMaxValue = secondMaxValue;
+        int nextMaxValue = maxValue;
+
         if (numbers.get(index) >= maxValue) {
-            return findSecondMaxValueRecursive(numbers, index + 1, maxValue, numbers.get(index));
+            nextSecondMaxValue = maxValue;
+            nextMaxValue = numbers.get(index);
         } else if (numbers.get(index) > secondMaxValue) {
-            return findSecondMaxValueRecursive(numbers, index + 1, numbers.get(index), maxValue);
+            nextSecondMaxValue = numbers.get(index);
         }
 
-        return findSecondMaxValueRecursive(numbers, index + 1, secondMaxValue, maxValue);
+        return findSecondMaxValueRecursive(numbers, index + 1, nextSecondMaxValue, nextMaxValue);
     }
 
     public static List<Path> findAllFilesInDirectory(String path) throws Exception{
